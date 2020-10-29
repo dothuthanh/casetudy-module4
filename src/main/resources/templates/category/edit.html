@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit category</title>
+</head>
+<body>
+<h1>Edit category</h1>
+<p>
+    <a href="/categories">Customer list</a>
+</p>
+<th:block th:if="${message}">
+    <p th:text="${message}"></p>
+</th:block>
+<form th:action="@{/edit}" th:object="${category}" method="post" enctype="multipart/form-data">
+    <input th:type="hidden" name="id" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input  th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td>Img</td>
+            <td><input type="file" th:field="*{avatar}"/>
+                <input hidden th:field="*{img}">
+            </td>
+        </tr>
+            <td></td>
+            <td><input type="submit" value="Update customer"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+</body>
+</html>
