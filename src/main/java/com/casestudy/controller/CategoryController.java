@@ -1,10 +1,16 @@
 package com.casestudy.controller;
 
 import com.casestudy.model.Category;
+import com.casestudy.model.Song;
 import com.casestudy.service.category.ICategoryService;
+import com.casestudy.service.song.ISongService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -18,14 +24,15 @@ import java.util.Optional;
 
 @Controller
 public class CategoryController {
+
     @Autowired
     private ICategoryService iCategoryService;
     @Autowired
     private Environment environment;
     @GetMapping("/categories")
-    public ModelAndView showCategory() {
-        Iterable<Category> categories = iCategoryService.findAll();
-        ModelAndView modelAndView = new ModelAndView("/category/list");
+    public ModelAndView showCategory( @PageableDefault(size = 5) Pageable pageable) {
+        Page<Category> categories = iCategoryService.findAll(pageable);
+        ModelAndView modelAndView = new ModelAndView("category/list");
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }
@@ -125,8 +132,6 @@ public class CategoryController {
     public ModelAndView showInputNotAcceptable() {
         return new ModelAndView("/category/exption");
     }
-
-
 
 
 }
