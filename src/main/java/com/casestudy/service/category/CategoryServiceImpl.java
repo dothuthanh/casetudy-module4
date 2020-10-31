@@ -4,6 +4,10 @@ import com.casestudy.model.AppUser;
 import com.casestudy.model.Category;
 import com.casestudy.repository.category.ICategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,10 +17,10 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private ICategory iCategory;
     @Override
-    public Iterable<Category> findAll() {
-        return iCategory.findAll();
+    public Page<Category> findAll(Pageable pageable) {
+//        pageable = PageRequest.of(2,10);
+        return iCategory.findAll(pageable);
     }
-
     @Override
     public Category save(Category category) {
         return iCategory.save(category);
@@ -33,4 +37,6 @@ public class CategoryServiceImpl implements ICategoryService {
         iCategory.deleteById(id);
 
     }
+
+
 }
